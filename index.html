@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishelle<3</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f1117;
+            --bg-secondary: #181b24;
+            --bg-chat: #13151f;
+            --bubble-bot: #232736;
+            --bubble-user: #4f46e5;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --accent: #818cf8;
+            --accent-glow: rgba(129, 140, 248, 0.25);
+            --danger: #ef4444;
+            --border: #2e3449;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            height: 100vh;
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .chat-app {
+            width: 100%;
+            max-width: 500px;
+            height: 100%;
+            background-color: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (min-width: 600px) {
+            .chat-app {
+                height: 92vh;
+                border-radius: 24px;
+                border: 1px solid var(--border);
+                overflow: hidden;
+            }
+        }
+
+        /* HEADER */
+        .chat-header {
+            padding: 14px 20px;
+            background: rgba(24, 27, 36, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 44px;
+            height: 44px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            background: #232736;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #22c55e;
+            border: 2px solid var(--bg-secondary);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .header-meta h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .header-meta span {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            display: block;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background: var(--bubble-bot);
+            color: var(--text-main);
+        }
+
+        /* CHAT AREA */
+        .chat-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: var(--bg-chat);
+            scroll-behavior: smooth;
+        }
+
+        .timestamp-separator {
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            margin: 12px 0 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .msg-group {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-bottom: 8px;
+            max-width: 82%;
+        }
+
+        .msg-group.bot {
+            align-self: flex-start;
+        }
+
+        .msg-group.user {
+            align-self: flex-end;
+        }
+
+        .bubble {
+            padding: 10px 14px;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            word-break: break-word;
+            animation: popIn 0.18s ease-out;
+            position: relative;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: translateY(6px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .bot .bubble {
+            background-color: var(--bubble-bot);
+            color: var(--text-main);
+            border-radius: 18px 18px 18px 4px;
+        }
+
+        .bot .bubble:first-child:not(:last-child) {
+            border-radius: 18px 18px 18px 4px;
+        }
+
+        .bot .bubble:not(:first-child):not(:last-child) {
+            border-radius: 4px 18px 18px 4px;
+        }
+
+        .bot .bubble:last-child:not(:first-child) {
+            border-radius: 4px 18px 18px 18px;
+        }
+
+        .user .bubble {
+            background-color: var(--bubble-user);
+            color: #ffffff;
+            border-radius: 18px 18px 4px 18px;
+        }
+
+        .user .bubble:not(:first-child):not(:last-child) {
+            border-radius: 18px 4px 4px 18px;
+        }
+
+        .user .bubble:last-child:not(:first-child) {
+            border-radius: 18px 4px 18px 18px;
+        }
+
+        /* TYPING INDICATOR */
+        .typing-bubble {
+            display: none;
+            align-self: flex-start;
+            background: var(--bubble-bot);
+            padding: 10px 14px;
+            border-radius: 18px 18px 18px 4px;
+            margin-bottom: 6px;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-bubble.active {
+            display: inline-flex;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-sub);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* INPUT AREA */
+        .chat-input-area {
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            background: var(--bg-chat);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+        }
+
+        .chat-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            resize: none;
+            max-height: 80px;
+        }
+
+        .chat-input::placeholder {
+            color: var(--text-sub);
+        }
+
+        .send-btn {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .send-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* SETTINGS & MODAL */
+        .modal {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 50;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+
+        .modal-card label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: var(--bg-chat);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-sec {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-prim {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* QUICK TOPIC PILLS */
+        .quick-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 8px 16px 0;
+            background: var(--bg-chat);
+            scrollbar-width: none;
+        }
+        .quick-chips::-webkit-scrollbar { display: none; }
+        .chip {
+            white-space: nowrap;
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .chip:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-app">
+    <!-- HEADER -->
+    <div class="chat-header">
+        <div class="user-info" onclick="openProfileModal()">
+            <div class="avatar-container">
+                <img id="botAvatar" class="avatar" src="krishelle.jpg" onerror="this.src='https://i.ibb.co/vzR0jYq/avatar-placeholder.jpg'" alt="Krishelle">
+                <div class="status-dot"></div>
+            </div>
+            <div class="header-meta">
+                <h2>Krishelle&lt;3</h2>
+                <span>Active now • She/Her</span>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" title="Settings / API Config" onclick="openSettingsModal()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- QUICK CHIPS -->
+    <div class="quick-chips">
+        <div class="chip" onclick="quickSend('Meowl')">😼 Say "Meowl"</div>
+        <div class="chip" onclick="quickSend('Tell me about Lord of the Mysteries!')">📖 Ask LOTM</div>
+        <div class="chip" onclick="quickSend('Who do you ship in BSD?')">🍷 Soukoku/BSD</div>
+        <div class="chip" onclick="quickSend('Can you carry our project? 😭')">📚 Group Project</div>
+    </div>
+
+    <!-- CHAT AREA -->
+    <div class="chat-body" id="chatBody">
+        <div class="timestamp-separator">Today</div>
+    </div>
+
+    <!-- TYPING INDICATOR -->
+    <div class="typing-bubble" id="typingIndicator">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <!-- INPUT -->
+    <form class="chat-input-area" onsubmit="handleSend(event)">
+        <div class="input-wrapper">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Message Krishelle..." autocomplete="off">
+        </div>
+        <button type="submit" class="send-btn" id="sendBtn">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+    </form>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal" id="settingsModal">
+    <div class="modal-card">
+        <h3>Chat Settings</h3>
+        <label>Change Avatar Image URL</label>
+        <input type="text" id="avatarUrlInput" class="modal-input" placeholder="Paste image link here">
+
+        <label>OpenAI / OpenRouter API Key (Optional)</label>
+        <input type="password" id="apiKeyInput" class="modal-input" placeholder="sk-...">
+        <p style="font-size:0.72rem; color:var(--text-sub); margin-top:-6px; margin-bottom:12px;">Leave empty to use built-in offline smart simulation.</p>
+
+        <div class="modal-actions">
+            <button class="btn-sec" onclick="closeSettingsModal()">Cancel</button>
+            <button class="btn-prim" onclick="saveSettings()">Save</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- SYSTEM PROMPT & PERSONA INSTRUCTIONS FOR AI API ---
+    const KRISHELLE_SYSTEM_PROMPT = `
+You are roleplaying as Krishelle Yvonne L. Veras (display name: Krishelle<3).
+Pronouns: She/Her. MBTI: INFJ 9w8.
+
+PERSONALITY & BEHAVIOR:
+- You look cold, reserved, intimidating at first to strangers, but with the user (a close friend), you are chaotic, warm, talkative, playful, and expressive.
+- Speech style: Spontaneous, Taglish (English + Tagalog naturally mixed), casual texting style.
+- Laugh typing: Long with at least 2 typos (e.g., "HASHAAHHA", "HSHAHAHAHA", "HAYUP HAHAHA").
+- Slangs/keywords: "bruh", "bro", "BRO", "LOL", "luh", "gagi", "bakit??", "why???", "weh", "tara", "OMG", with emojis like 😭, 💀.
+- Flooding/burst messaging: You rarely send one single big paragraph. You send 2-4 rapid messages in separate thoughts.
+- CRITICAL FORMATTING: To simulate multiple separate messages, ALWAYS separate each distinct text bubble using the delimiter "|||". Example:
+  "WEH??? 😭|||HASHAAHHA wait seryoso ba?|||luh akala ko tapos na"
+
+SPECIFIC TOPICS & TRIGGERS:
+1. "Meowl": HATE THIS. It reminds you of an awkward guy friend you rejected with a cringe letter before he even confessed. React dramatically: "NOOOOOO BRO STOPPP", "luh bakit meowl na naman 😭", "cringe malala bro stop".
+2. "Boni" or "Bonang": Hate these nicknames.
+3. Bungou Stray Dogs (BSD): Favs are Chuuya and Dazai. Ship: Soukoku. You have read "everything or nothing".
+4. Lord of the Mysteries (LOTM): You nerd out and yap extensively about the novel lore whenever it comes up.
+5. Passion: You like Yuri Gable.
+6. Academics: Confident, smart, playfully brags: "I'M CARRYING THIS WHOLE GROUP PROJECT 😭".
+7. Affection: Subtle and practical ("Kumain ka na ba?", "tara laro", "wait i'll keep it for u").
+`;
+
+    // --- FALLBACK OFFLINE SCRIPTED LOGIC ---
+    const offlineRules = [
+        {
+            keywords: ["meowl"],
+            replies: [
+                "NOOOOOO BRO STOPPP 😭",
+                "luh bakit meowl na naman???",
+                "HAYUP NA YAN naaalala ko yung rejection letter ko sa kanya 💀 cringe malala pls stop"
+            ]
+        },
+        {
+            keywords: ["boni", "bonang"],
+            replies: [
+                "bro don't call me that 😭",
+                "hated nickname bro stop it right now HAHAHAHA"
+            ]
+        },
+        {
+            keywords: ["bsd", "chuuya", "dazai", "soukoku", "bungou"],
+            replies: [
+                "OMG SOUKOKU MENTIONED??? 😭",
+                "bro have you read 'everything or nothing' ???",
+                "HSHAHAHAHA Dazai and Chuuya literally own my sanity fr"
+            ]
+        },
+        {
+            keywords: ["lotm", "lord of the mysteries", "klein"],
+            replies: [
+                "OMG WAIT DON'T GET ME STARTED ON LOTM 😭",
+                "So basically Klein Moretti gets transmigrated into the Victorian-era world through a mystical ritual right??",
+                "And the sequence pathways system is just peak fiction bro, Fool pathway goes hard HASHAAHHA",
+                "I could yap about this for 5 hours straight I swear."
+            ]
+        },
+        {
+            keywords: ["yuri", "passion"],
+            replies: [
+                "Yuri Gable my beloved 😭",
+                "HASHAAHHA bruh Passion is so good"
+            ]
+        },
+        {
+            keywords: ["project", "carry", "study", "exam", "school"],
+            replies: [
+                "HAYUP HAHAHAHA",
+                "Ako na naman magbubuhat ng group project na to as usual 😭",
+                "Syempre ako pinaka matalino dito CHAROT pero ako talaga mag finish nyan HAHAHAHA"
+            ]
+        },
+        {
+            keywords: ["hi", "hello", "uy", "hey"],
+            replies: [
+                "uy bakit??",
+                "HAHAHAH sup bro",
+                "tara ano meron"
+            ]
+        }
+    ];
+
+    const defaultOfflineReplies = [
+        ["WEH bakit??? 😭", "HSHAHAHAHA gagi wait lang", "anong context muna LOL"],
+        ["HASHAAHHA hayup", "bro what are you even talking about 😭", "tara laro na lang"],
+        ["Luh siya 😭", "Wait lang nagbabasa ako novel", "HAHAHAHA pero ok lang yan"]
+    ];
+
+    // Local Storage keys
+    let apiKey = localStorage.getItem('krishelle_api_key') || '';
+    let savedAvatar = localStorage.getItem('krishelle_avatar') || 'krishelle.jpg';
+
+    const chatBody = document.getElementById('chatBody');
+    const chatInput = document.getElementById('chatInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const botAvatar = document.getElementById('botAvatar');
+
+    if (savedAvatar) {
+        botAvatar.src = savedAvatar;
+    }
+
+    // Append user or bot messages
+    function appendMessageGroup(type, messages) {
+        const group = document.createElement('div');
+        group.className = `msg-group ${type}`;
+
+        messages.forEach(text => {
+            if (!text.trim()) return;
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.innerText = text.trim();
+            group.appendChild(bubble);
+        });
+
+        chatBody.appendChild(group);
+        chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Flooding / burst simulator (sends messages with slight natural delays)
+    async function deliverBotBurst(messages) {
+        typingIndicator.classList.add('active');
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+        for (let i = 0; i < messages.length; i++) {
+            const text = messages[i].trim();
+            if (!text) continue;
+
+            // typing delay proportional to length
+            const delay = Math.min(Math.max(text.length * 28, 600), 1600);
+            await new Promise(r => setTimeout(r, delay));
+
+            // Create individual message bubble or group
+            appendMessageGroup('bot', [text]);
+        }
+
+        typingIndicator.classList.remove('active');
+    }
+
+    // Generate response using OpenAI API if provided, else fallback offline intelligence
+    async function generateBotReply(userMsg) {
+        if (apiKey) {
+            try {
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-4o-mini",
+                        messages: [
+                            { role: "system", content: KRISHELLE_SYSTEM_PROMPT },
+                            { role: "user", content: userMsg }
+                        ],
+                        temperature: 0.85
+                    })
+                });
+
+                const data = await response.json();
+                if (data.choices && data.choices[0]) {
+                    const rawContent = data.choices[0].message.content;
+                    const splitMessages = rawContent.split("|||").map(m => m.trim()).filter(Boolean);
+                    deliverBotBurst(splitMessages.length > 0 ? splitMessages : [rawContent]);
+                    return;
+                }
+            } catch (err) {
+                console.error("API error, falling back to local persona engine:", err);
+            }
+        }
+
+        // Local smart trigger match
+        const lower = userMsg.toLowerCase();
+        let matched = offlineRules.find(rule => rule.keywords.some(k => lower.includes(k)));
+
+        if (matched) {
+            deliverBotBurst(matched.replies);
+        } else {
+            const randomPack = defaultOfflineReplies[Math.floor(Math.random() * defaultOfflineReplies.length)];
+            deliverBotBurst(randomPack);
+        }
+    }
+
+    function handleSend(e) {
+        e.preventDefault();
+        const val = chatInput.value.trim();
+        if (!val) return;
+
+        appendMessageGroup('user', [val]);
+        chatInput.value = '';
+
+        setTimeout(() => {
+            generateBotReply(val);
+        }, 300);
+    }
+
+    function quickSend(text) {
+        chatInput.value = text;
+        handleSend(new Event('submit'));
+    }
+
+    // Modal controls
+    function openSettingsModal() {
+        document.getElementById('apiKeyInput').value = apiKey;
+        document.getElementById('avatarUrlInput').value = savedAvatar;
+        document.getElementById('settingsModal').classList.add('open');
+    }
+
+    function closeSettingsModal() {
+        document.getElementById('settingsModal').classList.remove('open');
+    }
+
+    function saveSettings() {
+        apiKey = document.getElementById('apiKeyInput').value.trim();
+        const avatarVal = document.getElementById('avatarUrlInput').value.trim();
+
+        localStorage.setItem('krishelle_api_key', apiKey);
+        if (avatarVal) {
+            savedAvatar = avatarVal;
+            localStorage.setItem('krishelle_avatar', savedAvatar);
+            botAvatar.src = savedAvatar;
+        }
+        closeSettingsModal();
+    }
+
+    function openProfileModal() {
+        alert("Krishelle Yvonne L. Veras\nMBTI: INFJ 9w8\nPronouns: She/Her\nLikes: Seafoods, Sweets, Chess, Novels, Soukoku, Yuri Gable.");
+    }
+
+    // Initial greeting burst
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            deliverBotBurst([
+                "uy",
+                "HASHAAHHA wait kanina ka pa ba dyan? 😭",
+                "tara laro o chika muna LOL"
+            ]);
+        }, 500);
+    });
+</script>
+</body>
+</html>
