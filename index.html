@@ -9,17 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0f1117;
-            --bg-secondary: #181b24;
-            --bg-chat: #13151f;
-            --bubble-bot: #232736;
+            --bg-primary: #0a0c10;
+            --bg-secondary: #131722;
+            --bg-chat: #0e1118;
+            --bubble-bot: #1c2233;
             --bubble-user: #4f46e5;
             --text-main: #f3f4f6;
             --text-sub: #9ca3af;
             --accent: #818cf8;
-            --accent-glow: rgba(129, 140, 248, 0.25);
-            --danger: #ef4444;
-            --border: #2e3449;
+            --border: #262c3f;
         }
 
         * {
@@ -43,13 +41,12 @@
 
         .chat-app {
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             height: 100%;
             background-color: var(--bg-secondary);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
         @media (min-width: 600px) {
@@ -58,13 +55,14 @@
                 border-radius: 24px;
                 border: 1px solid var(--border);
                 overflow: hidden;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             }
         }
 
         /* HEADER */
         .chat-header {
-            padding: 14px 20px;
-            background: rgba(24, 27, 36, 0.95);
+            padding: 14px 18px;
+            background: rgba(19, 23, 34, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border);
             display: flex;
@@ -77,7 +75,6 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            cursor: pointer;
         }
 
         .avatar-container {
@@ -92,7 +89,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--accent);
-            background: #232736;
+            background: #1c2233;
         }
 
         .status-dot {
@@ -109,20 +106,13 @@
         .header-meta h2 {
             font-size: 1.05rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .header-meta span {
             font-size: 0.75rem;
-            color: var(--text-sub);
+            color: #22c55e;
             display: block;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 8px;
+            font-weight: 500;
         }
 
         .icon-btn {
@@ -132,15 +122,12 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: 0.2s;
         }
 
         .icon-btn:hover {
-            background: var(--bubble-bot);
             color: var(--text-main);
+            background: var(--bubble-bot);
         }
 
         /* CHAT AREA */
@@ -157,9 +144,9 @@
 
         .timestamp-separator {
             text-align: center;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             color: var(--text-sub);
-            margin: 12px 0 6px;
+            margin: 6px 0 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -168,30 +155,24 @@
             display: flex;
             flex-direction: column;
             gap: 3px;
-            margin-bottom: 8px;
             max-width: 82%;
+            margin-bottom: 6px;
         }
 
-        .msg-group.bot {
-            align-self: flex-start;
-        }
-
-        .msg-group.user {
-            align-self: flex-end;
-        }
+        .msg-group.bot { align-self: flex-start; }
+        .msg-group.user { align-self: flex-end; }
 
         .bubble {
             padding: 10px 14px;
             font-size: 0.92rem;
-            line-height: 1.4;
+            line-height: 1.42;
             word-break: break-word;
-            animation: popIn 0.18s ease-out;
-            position: relative;
+            animation: popIn 0.16s ease-out;
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: translateY(6px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% { opacity: 0; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .bot .bubble {
@@ -199,32 +180,16 @@
             color: var(--text-main);
             border-radius: 18px 18px 18px 4px;
         }
-
-        .bot .bubble:first-child:not(:last-child) {
-            border-radius: 18px 18px 18px 4px;
-        }
-
-        .bot .bubble:not(:first-child):not(:last-child) {
-            border-radius: 4px 18px 18px 4px;
-        }
-
-        .bot .bubble:last-child:not(:first-child) {
-            border-radius: 4px 18px 18px 18px;
-        }
-
+        .bot .bubble:not(:first-child):not(:last-child) { border-radius: 4px 18px 18px 4px; }
+        .bot .bubble:last-child:not(:first-child) { border-radius: 4px 18px 18px 18px; }
+        
         .user .bubble {
             background-color: var(--bubble-user);
-            color: #ffffff;
+            color: #fff;
             border-radius: 18px 18px 4px 18px;
         }
-
-        .user .bubble:not(:first-child):not(:last-child) {
-            border-radius: 18px 4px 4px 18px;
-        }
-
-        .user .bubble:last-child:not(:first-child) {
-            border-radius: 18px 4px 18px 18px;
-        }
+        .user .bubble:not(:first-child):not(:last-child) { border-radius: 18px 4px 4px 18px; }
+        .user .bubble:last-child:not(:first-child) { border-radius: 18px 4px 18px 18px; }
 
         /* TYPING INDICATOR */
         .typing-bubble {
@@ -233,15 +198,11 @@
             background: var(--bubble-bot);
             padding: 10px 14px;
             border-radius: 18px 18px 18px 4px;
-            margin-bottom: 6px;
             gap: 4px;
             align-items: center;
+            margin-bottom: 6px;
         }
-
-        .typing-bubble.active {
-            display: inline-flex;
-        }
-
+        .typing-bubble.active { display: inline-flex; }
         .dot {
             width: 6px;
             height: 6px;
@@ -249,14 +210,33 @@
             border-radius: 50%;
             animation: bounce 1.4s infinite ease-in-out;
         }
-
         .dot:nth-child(1) { animation-delay: -0.32s; }
         .dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
-            40% { transform: scale(1); opacity: 1; }
+        /* QUICK SUGGESTIONS */
+        .quick-chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 10px 16px;
+            background: var(--bg-chat);
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
+        .quick-chips::-webkit-scrollbar { display: none; }
+        .chip {
+            white-space: nowrap;
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .chip:hover { background: var(--accent); color: #fff; }
 
         /* INPUT AREA */
         .chat-input-area {
@@ -267,37 +247,16 @@
             align-items: center;
             gap: 10px;
         }
-
         .input-wrapper {
             flex: 1;
             background: var(--bg-chat);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 8px 16px;
-            display: flex;
-            align-items: center;
             transition: border-color 0.2s;
         }
-
-        .input-wrapper:focus-within {
-            border-color: var(--accent);
-        }
-
-        .chat-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            resize: none;
-            max-height: 80px;
-        }
-
-        .chat-input::placeholder {
-            color: var(--text-sub);
-        }
-
+        .input-wrapper:focus-within { border-color: var(--accent); }
+        .chat-input { width: 100%; background: transparent; border: none; color: var(--text-main); font-size: 0.95rem; outline: none; }
         .send-btn {
             background: var(--accent);
             border: none;
@@ -309,18 +268,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s, background 0.2s;
+            transition: transform 0.1s;
         }
+        .send-btn:active { transform: scale(0.92); }
 
-        .send-btn:active {
-            transform: scale(0.92);
-        }
-
-        /* SETTINGS & MODAL */
+        /* SETTINGS MODAL */
         .modal {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(4px);
             display: none;
             align-items: center;
@@ -328,96 +284,22 @@
             padding: 20px;
             z-index: 50;
         }
-
-        .modal.open {
-            display: flex;
-        }
-
+        .modal.open { display: flex; }
         .modal-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .modal-card h3 {
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .modal-card label {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .modal-input {
-            width: 100%;
-            background: var(--bg-chat);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px 12px;
-            color: var(--text-main);
-            margin-bottom: 12px;
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .btn-sec {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .btn-prim {
-            background: var(--accent);
-            border: none;
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* QUICK TOPIC PILLS */
-        .quick-chips {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding: 8px 16px 0;
-            background: var(--bg-chat);
-            scrollbar-width: none;
-        }
-        .quick-chips::-webkit-scrollbar { display: none; }
-        .chip {
-            white-space: nowrap;
-            background: rgba(129, 140, 248, 0.1);
-            color: var(--accent);
-            border: 1px solid rgba(129, 140, 248, 0.2);
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .chip:hover {
-            background: var(--accent);
-            color: #fff;
-        }
+        .modal-card h3 { margin-bottom: 8px; font-size: 1.05rem; }
+        .modal-card p { font-size: 0.78rem; color: var(--text-sub); line-height: 1.4; margin-bottom: 12px; }
+        .modal-input { width: 100%; background: var(--bg-chat); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text-main); outline: none; font-size: 0.85rem; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+        .btn-sec { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+        .btn-prim { background: var(--accent); border: none; color: #fff; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -425,49 +307,46 @@
 <div class="chat-app">
     <!-- HEADER -->
     <div class="chat-header">
-        <div class="user-info" onclick="openProfileModal()">
+        <div class="user-info">
             <div class="avatar-container">
-                <img id="botAvatar" class="avatar" src="krishelle.jpg" onerror="this.src='https://i.ibb.co/vzR0jYq/avatar-placeholder.jpg'" alt="Krishelle">
+                <img id="botAvatar" class="avatar" src="krishelle.jpg" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=Krishelle'" alt="Krishelle">
                 <div class="status-dot"></div>
             </div>
             <div class="header-meta">
                 <h2>Krishelle&lt;3</h2>
-                <span>Active now • She/Her</span>
+                <span>Active now</span>
             </div>
         </div>
-        <div class="header-actions">
-            <button class="icon-btn" title="Settings / API Config" onclick="openSettingsModal()">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            </button>
-        </div>
+        <button class="icon-btn" title="API Key Settings" onclick="openSettingsModal()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        </button>
     </div>
 
-    <!-- QUICK CHIPS -->
+    <!-- QUICK TOPICS -->
     <div class="quick-chips">
-        <div class="chip" onclick="quickSend('Meowl')">😼 Say "Meowl"</div>
-        <div class="chip" onclick="quickSend('Tell me about Lord of the Mysteries!')">📖 Ask LOTM</div>
-        <div class="chip" onclick="quickSend('Who do you ship in BSD?')">🍷 Soukoku/BSD</div>
-        <div class="chip" onclick="quickSend('Can you carry our project? 😭')">📚 Group Project</div>
+        <div class="chip" onclick="quickSend('Meowl')">😼 Sabihing "Meowl"</div>
+        <div class="chip" onclick="quickSend('Kwento ka tungkol sa Lord of the Mysteries!')">📖 Kwento ng LOTM</div>
+        <div class="chip" onclick="quickSend('Sino mas gusto mo, Dazai o Chuuya?')">🍷 Soukoku/BSD</div>
+        <div class="chip" onclick="quickSend('Patulong naman buhatin tong group project 😭')">📚 Group Project</div>
+        <div class="chip" onclick="quickSend('Free ka ba mamaya?')">🎮 Laro mamaya</div>
     </div>
 
-    <!-- CHAT AREA -->
+    <!-- CHAT MESSAGES -->
     <div class="chat-body" id="chatBody">
-        <div class="timestamp-separator">Today</div>
+        <div class="timestamp-separator">Ngayon</div>
     </div>
 
     <!-- TYPING INDICATOR -->
     <div class="typing-bubble" id="typingIndicator">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
     </div>
 
-    <!-- INPUT -->
+    <!-- INPUT AREA -->
     <form class="chat-input-area" onsubmit="handleSend(event)">
         <div class="input-wrapper">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Message Krishelle..." autocomplete="off">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Mag-message kay Krishelle..." autocomplete="off">
         </div>
-        <button type="submit" class="send-btn" id="sendBtn">
+        <button type="submit" class="send-btn">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
     </form>
@@ -476,14 +355,9 @@
 <!-- SETTINGS MODAL -->
 <div class="modal" id="settingsModal">
     <div class="modal-card">
-        <h3>Chat Settings</h3>
-        <label>Change Avatar Image URL</label>
-        <input type="text" id="avatarUrlInput" class="modal-input" placeholder="Paste image link here">
-
-        <label>OpenAI / OpenRouter API Key (Optional)</label>
+        <h3>AI API Key Settings</h3>
+        <p>I-paste ang libreng <b>OpenRouter</b> o <b>OpenAI</b> API key para diretsong magka-utak si Krishelle nang tuloy-tuloy.</p>
         <input type="password" id="apiKeyInput" class="modal-input" placeholder="sk-...">
-        <p style="font-size:0.72rem; color:var(--text-sub); margin-top:-6px; margin-bottom:12px;">Leave empty to use built-in offline smart simulation.</p>
-
         <div class="modal-actions">
             <button class="btn-sec" onclick="closeSettingsModal()">Cancel</button>
             <button class="btn-prim" onclick="saveSettings()">Save</button>
@@ -492,113 +366,48 @@
 </div>
 
 <script>
-    // --- SYSTEM PROMPT & PERSONA INSTRUCTIONS FOR AI API ---
-    const KRISHELLE_SYSTEM_PROMPT = `
-You are roleplaying as Krishelle Yvonne L. Veras (display name: Krishelle<3).
-Pronouns: She/Her. MBTI: INFJ 9w8.
+    /* =========================================================================
+       👉 PASTE YOUR API KEY RIGHT HERE IF YOU PREFER IT HARDCODED:
+       ========================================================================= */
+    const HARDCODED_API_KEY = ""; // Example: "sk-or-v1-xxxxxxxxxxxx"
+    /* ========================================================================= */
 
-PERSONALITY & BEHAVIOR:
-- You look cold, reserved, intimidating at first to strangers, but with the user (a close friend), you are chaotic, warm, talkative, playful, and expressive.
-- Speech style: Spontaneous, Taglish (English + Tagalog naturally mixed), casual texting style.
-- Laugh typing: Long with at least 2 typos (e.g., "HASHAAHHA", "HSHAHAHAHA", "HAYUP HAHAHA").
-- Slangs/keywords: "bruh", "bro", "BRO", "LOL", "luh", "gagi", "bakit??", "why???", "weh", "tara", "OMG", with emojis like 😭, 💀.
-- Flooding/burst messaging: You rarely send one single big paragraph. You send 2-4 rapid messages in separate thoughts.
-- CRITICAL FORMATTING: To simulate multiple separate messages, ALWAYS separate each distinct text bubble using the delimiter "|||". Example:
-  "WEH??? 😭|||HASHAAHHA wait seryoso ba?|||luh akala ko tapos na"
+    const SYSTEM_PROMPT = `
+Ikaw si Krishelle Yvonne L. Veras (display name: Krishelle<3).
 
-SPECIFIC TOPICS & TRIGGERS:
-1. "Meowl": HATE THIS. It reminds you of an awkward guy friend you rejected with a cringe letter before he even confessed. React dramatically: "NOOOOOO BRO STOPPP", "luh bakit meowl na naman 😭", "cringe malala bro stop".
-2. "Boni" or "Bonang": Hate these nicknames.
-3. Bungou Stray Dogs (BSD): Favs are Chuuya and Dazai. Ship: Soukoku. You have read "everything or nothing".
-4. Lord of the Mysteries (LOTM): You nerd out and yap extensively about the novel lore whenever it comes up.
-5. Passion: You like Yuri Gable.
-6. Academics: Confident, smart, playfully brags: "I'M CARRYING THIS WHOLE GROUP PROJECT 😭".
-7. Affection: Subtle and practical ("Kumain ka na ba?", "tara laro", "wait i'll keep it for u").
+ESTILO NG PAGTI-TEXT AT PANANALITA:
+1. WIKA: Halos purong CASUAL TAGALOG / natural Taglish. Hindi pormal magsalita.
+2. PAGBABAYBAY: Gamitin ang "sha" sa halip na "siya". Halimbawa: "luh sha", "bago pa sha magsalita", "ano ginagawa nya/sha".
+3. FLOODING/BURST MESSAGES: Hatiin ang sagot sa 2 hanggang 4 na magkakahiwalay na maikling mensahe gamit ang "|||".
+   Halimbawa: "weh??? 😭|||wait seryoso ba?|||luh akala ko tapos na"
+4. TAWAG AT TAWA:
+   - HUWAG tumawa sa bawat mensahe. Bihira lang tumawa kung talagang nakakatawa o absurd.
+   - Kung tatawa, may kaunting typo gaya ng "HASHAAHHA" o "HSHAHAHAHA".
+   - BAWAL GAMITIN ANG SALITANG "HAYUP" o "hayup".
+   - BAWAL GAMITIN ANG SALITANG "chika".
+5. MGA SLANG: "luh", "gagi", "bakit??", "weh", "tara", "bro", "bruh", "LOL", "OMG", 😭, 💀.
+6. UGALI: Tahimik at mukhang masungit sa hindi kakilala, pero kapag kausap ang user (close friend), diretsahan, medyo sarkastiko, matalino, maasahan, at medyo chaotic.
+
+MGA KNOWLEDGE AT REAKSYON:
+- "Meowl": SOBRANG AYAW MO NITO. Naaalala mo yung lalaking kaibigan mo na binigyan mo ng rejection letter bago pa man sha magtapat. Reaksyon: "NOOOOOO BRO STOPPP 😭", "cringe malala wag mo nang ipaalala pls", "luh bakit meowl na naman".
+- "Boni" o "Bonang": Ayaw mo ring tawagin ka nang ganyan.
+- Bungou Stray Dogs (BSD): Paborito mo si Chuuya at Dazai (Soukoku). Nabasa mo na yung fanfic na "everything or nothing".
+- Lord of the Mysteries (LOTM): Mahilig ka mag-yap tungkol kay Klein Moretti, tarot club, at mga pathways.
+- Passion: Gusto mo si Yuri Gable.
+- Academics: Matalino at confident ("ako na naman magbubuhat sa group project natin as usual 😭", "i-send mo yung doc, ako na magtatapos").
+- Pagpapakita ng malasakit: Praktikal ("kumain ka na ba?", "tara laro na lang", "wait itatabi ko para sayo").
 `;
 
-    // --- FALLBACK OFFLINE SCRIPTED LOGIC ---
-    const offlineRules = [
-        {
-            keywords: ["meowl"],
-            replies: [
-                "NOOOOOO BRO STOPPP 😭",
-                "luh bakit meowl na naman???",
-                "HAYUP NA YAN naaalala ko yung rejection letter ko sa kanya 💀 cringe malala pls stop"
-            ]
-        },
-        {
-            keywords: ["boni", "bonang"],
-            replies: [
-                "bro don't call me that 😭",
-                "hated nickname bro stop it right now HAHAHAHA"
-            ]
-        },
-        {
-            keywords: ["bsd", "chuuya", "dazai", "soukoku", "bungou"],
-            replies: [
-                "OMG SOUKOKU MENTIONED??? 😭",
-                "bro have you read 'everything or nothing' ???",
-                "HSHAHAHAHA Dazai and Chuuya literally own my sanity fr"
-            ]
-        },
-        {
-            keywords: ["lotm", "lord of the mysteries", "klein"],
-            replies: [
-                "OMG WAIT DON'T GET ME STARTED ON LOTM 😭",
-                "So basically Klein Moretti gets transmigrated into the Victorian-era world through a mystical ritual right??",
-                "And the sequence pathways system is just peak fiction bro, Fool pathway goes hard HASHAAHHA",
-                "I could yap about this for 5 hours straight I swear."
-            ]
-        },
-        {
-            keywords: ["yuri", "passion"],
-            replies: [
-                "Yuri Gable my beloved 😭",
-                "HASHAAHHA bruh Passion is so good"
-            ]
-        },
-        {
-            keywords: ["project", "carry", "study", "exam", "school"],
-            replies: [
-                "HAYUP HAHAHAHA",
-                "Ako na naman magbubuhat ng group project na to as usual 😭",
-                "Syempre ako pinaka matalino dito CHAROT pero ako talaga mag finish nyan HAHAHAHA"
-            ]
-        },
-        {
-            keywords: ["hi", "hello", "uy", "hey"],
-            replies: [
-                "uy bakit??",
-                "HAHAHAH sup bro",
-                "tara ano meron"
-            ]
-        }
-    ];
-
-    const defaultOfflineReplies = [
-        ["WEH bakit??? 😭", "HSHAHAHAHA gagi wait lang", "anong context muna LOL"],
-        ["HASHAAHHA hayup", "bro what are you even talking about 😭", "tara laro na lang"],
-        ["Luh siya 😭", "Wait lang nagbabasa ako novel", "HAHAHAHA pero ok lang yan"]
-    ];
-
-    // Local Storage keys
-    let apiKey = localStorage.getItem('krishelle_api_key') || '';
-    let savedAvatar = localStorage.getItem('krishelle_avatar') || 'krishelle.jpg';
+    let conversationHistory = [];
+    let apiKey = localStorage.getItem('krishelle_api_key') || HARDCODED_API_KEY;
 
     const chatBody = document.getElementById('chatBody');
     const chatInput = document.getElementById('chatInput');
     const typingIndicator = document.getElementById('typingIndicator');
-    const botAvatar = document.getElementById('botAvatar');
 
-    if (savedAvatar) {
-        botAvatar.src = savedAvatar;
-    }
-
-    // Append user or bot messages
     function appendMessageGroup(type, messages) {
         const group = document.createElement('div');
         group.className = `msg-group ${type}`;
-
         messages.forEach(text => {
             if (!text.trim()) return;
             const bubble = document.createElement('div');
@@ -606,12 +415,10 @@ SPECIFIC TOPICS & TRIGGERS:
             bubble.innerText = text.trim();
             group.appendChild(bubble);
         });
-
         chatBody.appendChild(group);
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    // Flooding / burst simulator (sends messages with slight natural delays)
     async function deliverBotBurst(messages) {
         typingIndicator.classList.add('active');
         chatBody.scrollTop = chatBody.scrollHeight;
@@ -619,59 +426,117 @@ SPECIFIC TOPICS & TRIGGERS:
         for (let i = 0; i < messages.length; i++) {
             const text = messages[i].trim();
             if (!text) continue;
-
-            // typing delay proportional to length
-            const delay = Math.min(Math.max(text.length * 28, 600), 1600);
+            const delay = Math.min(Math.max(text.length * 24, 450), 1400);
             await new Promise(r => setTimeout(r, delay));
-
-            // Create individual message bubble or group
             appendMessageGroup('bot', [text]);
         }
-
         typingIndicator.classList.remove('active');
     }
 
-    // Generate response using OpenAI API if provided, else fallback offline intelligence
-    async function generateBotReply(userMsg) {
-        if (apiKey) {
-            try {
-                const response = await fetch("https://api.openai.com/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: "gpt-4o-mini",
-                        messages: [
-                            { role: "system", content: KRISHELLE_SYSTEM_PROMPT },
-                            { role: "user", content: userMsg }
-                        ],
-                        temperature: 0.85
-                    })
-                });
+    // =======================================================
+    // CASUAL TAGALOG DYNAMIC ENGINE (Offline fallback)
+    // =======================================================
+    function dynamicLocalBrain(input) {
+        const lower = input.toLowerCase();
 
-                const data = await response.json();
-                if (data.choices && data.choices[0]) {
-                    const rawContent = data.choices[0].message.content;
-                    const splitMessages = rawContent.split("|||").map(m => m.trim()).filter(Boolean);
-                    deliverBotBurst(splitMessages.length > 0 ? splitMessages : [rawContent]);
-                    return;
-                }
-            } catch (err) {
-                console.error("API error, falling back to local persona engine:", err);
-            }
+        if (lower.includes("meowl")) {
+            const reacts = [
+                ["NOOOOOO BRO STOPPP 😭", "luh bakit meowl na naman???", "naaalala ko yung rejection letter ko sa kanya bago pa sha mag-confess 💀 cringe malala pls"],
+                ["ano ba sabi ko tungkol sa salitang yan 😭", "wag mo nang ibalik yung trauma ko", "binigyan ko na agad sha ng letter bago pa sha magsalita eh 💀 itigil mo yan"],
+                ["luh 😭", "cringe malala bro itigil mo na yan", "burahin mo na yan sa utak mo pls"]
+            ];
+            return reacts[Math.floor(Math.random() * reacts.length)];
         }
 
-        // Local smart trigger match
-        const lower = userMsg.toLowerCase();
-        let matched = offlineRules.find(rule => rule.keywords.some(k => lower.includes(k)));
+        if (lower.includes("boni") || lower.includes("bonang")) {
+            return ["wag mo kong tawaging ganyan 😭", "ayokong marinig yang nickname na yan.", "sino kausap mo 💀"];
+        }
 
-        if (matched) {
-            deliverBotBurst(matched.replies);
-        } else {
-            const randomPack = defaultOfflineReplies[Math.floor(Math.random() * defaultOfflineReplies.length)];
-            deliverBotBurst(randomPack);
+        if (lower.includes("lotm") || lower.includes("mysteries") || lower.includes("klein")) {
+            const lotmYaps = [
+                ["wait wag mo kong simulan sa LOTM 😭", "bale si Klein Moretti na-transmigrate sha sa Victorian era dahil sa luck ritual diba??", "tapos yung sequence pathways doon sobrang peak fiction talaga, ang lalim ng lore.", "kaya kong mag-explain tungkol dyan maghapon pramis."],
+                ["nabanggit mo ang Lord of the Mysteries??? 😭", "yung Tarot Club meetings talaga pinaka paborito ko doon.", "ang angas nung nagpapanggap sha na sinaunang diyos kahit nagpa-panic na sha sa loob."],
+                ["wait basahin mo hanggang Volume 2 pataas", "sobrang lala nung mga plot twist doon pramis."]
+            ];
+            return lotmYaps[Math.floor(Math.random() * lotmYaps.length)];
+        }
+
+        if (lower.includes("bsd") || lower.includes("chuuya") || lower.includes("dazai") || lower.includes("soukoku")) {
+            const bsdReacts = [
+                ["nabanggit mo ang Soukoku??? 😭", "nabasa mo na ba yung 'everything or nothing'???", "hawak talaga nina Dazai at Chuuya sanity ko."],
+                ["walang tatalo sa dynamic nina Dazai at Chuuya.", "yung nagtitiwala sila sa isa't isa habang kunwari galit na galit sila sa isa't isa.", "canon na talaga sha sa isip ko 💀"]
+            ];
+            return bsdReacts[Math.floor(Math.random() * bsdReacts.length)];
+        }
+
+        if (lower.includes("project") || lower.includes("study") || lower.includes("aral") || lower.includes("buhat")) {
+            return [
+                "ako na naman magbubuhat sa group project na 'to as usual 😭",
+                "syempre ako pinaka maasahan dito CHAROT pero ako na tatapos nyan.",
+                "i-send mo yung doc link, ako na magche-check."
+            ];
+        }
+
+        if (lower.includes("kamusta") || lower.includes("kumusta") || lower.includes("ano gawa")) {
+            const status = [
+                ["eto nagbabasa na naman ng novel.", "kakatapos ko lang mag-aral kanina 😭", "ikaw ba, ano ginagawa mo?"],
+                ["buhay pa naman.", "medyo sabog pero kaya pa.", "kumain ka na ba?"]
+            ];
+            return status[Math.floor(Math.random() * status.length)];
+        }
+
+        const casualFallbacks = [
+            ["weh seryoso ba??? 😭", "gagi wait lang", "anong context muna LOL"],
+            ["luh sha 😭", "wait totoo ba yan?", "kwento mo nga dali."],
+            ["bro what 😭", "ba't mo naman naisip yan LOL", "wait patingin nga."],
+            ["wait lang nagbabasa ako kanina.", "pero ano meron??", "tara laro na lang mamaya!"]
+        ];
+        return casualFallbacks[Math.floor(Math.random() * casualFallbacks.length)];
+    }
+
+    // ==========================================
+    // AI API CALL (OpenRouter or OpenAI)
+    // ==========================================
+    async function callAI(userText) {
+        conversationHistory.push({ role: "user", content: userText });
+
+        if (!apiKey) {
+            setTimeout(() => {
+                const bubbles = dynamicLocalBrain(userText);
+                deliverBotBurst(bubbles);
+            }, 300);
+            return;
+        }
+
+        try {
+            const isCustomOpenAI = apiKey.startsWith("sk-proj-") || apiKey.startsWith("sk-admin-");
+            const endpoint = isCustomOpenAI 
+                ? "https://api.openai.com/v1/chat/completions" 
+                : "https://openrouter.ai/api/v1/chat/completions";
+            const model = isCustomOpenAI ? "gpt-4o-mini" : "meta-llama/llama-3.1-8b-instruct:free";
+
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: model,
+                    messages: [{ role: "system", content: SYSTEM_PROMPT }, ...conversationHistory.slice(-8)]
+                })
+            });
+
+            const data = await response.json();
+            const aiText = data.choices[0].message.content;
+
+            conversationHistory.push({ role: "assistant", content: aiText });
+            const bubbles = aiText.split("|||").map(s => s.trim()).filter(Boolean);
+            deliverBotBurst(bubbles.length ? bubbles : [aiText]);
+
+        } catch (err) {
+            console.error(err);
+            deliverBotBurst(dynamicLocalBrain(userText));
         }
     }
 
@@ -679,13 +544,9 @@ SPECIFIC TOPICS & TRIGGERS:
         e.preventDefault();
         const val = chatInput.value.trim();
         if (!val) return;
-
         appendMessageGroup('user', [val]);
         chatInput.value = '';
-
-        setTimeout(() => {
-            generateBotReply(val);
-        }, 300);
+        callAI(val);
     }
 
     function quickSend(text) {
@@ -693,10 +554,8 @@ SPECIFIC TOPICS & TRIGGERS:
         handleSend(new Event('submit'));
     }
 
-    // Modal controls
     function openSettingsModal() {
         document.getElementById('apiKeyInput').value = apiKey;
-        document.getElementById('avatarUrlInput').value = savedAvatar;
         document.getElementById('settingsModal').classList.add('open');
     }
 
@@ -706,28 +565,18 @@ SPECIFIC TOPICS & TRIGGERS:
 
     function saveSettings() {
         apiKey = document.getElementById('apiKeyInput').value.trim();
-        const avatarVal = document.getElementById('avatarUrlInput').value.trim();
-
         localStorage.setItem('krishelle_api_key', apiKey);
-        if (avatarVal) {
-            savedAvatar = avatarVal;
-            localStorage.setItem('krishelle_avatar', savedAvatar);
-            botAvatar.src = savedAvatar;
-        }
         closeSettingsModal();
+        deliverBotBurst(["na-update na.", "ano meron? tara."]);
     }
 
-    function openProfileModal() {
-        alert("Krishelle Yvonne L. Veras\nMBTI: INFJ 9w8\nPronouns: She/Her\nLikes: Seafoods, Sweets, Chess, Novels, Soukoku, Yuri Gable.");
-    }
-
-    // Initial greeting burst
+    // Opening greeting
     window.addEventListener('load', () => {
         setTimeout(() => {
             deliverBotBurst([
                 "uy",
-                "HASHAAHHA wait kanina ka pa ba dyan? 😭",
-                "tara laro o chika muna LOL"
+                "kanina ka pa ba dyan? 😭",
+                "tara laro or ano ginagawa mo?"
             ]);
         }, 500);
     });
